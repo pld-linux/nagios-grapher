@@ -7,7 +7,7 @@ License:	GPL
 Group:		Applications/System
 Source0:	nagios_grapher-%{version}.tar.bz2
 # Source0-md5:	ebde01f5ec38925b3a6ad6c6b3b5f8c3
-URL:		http://www.nagiosexchange.org/Charts.42.0.html?&tx_netnagext_pi1[p_view]=195
+URL:		http://tinyurl.com/ad67c
 Requires:	nagios-cgi
 Requires:	rrdtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
