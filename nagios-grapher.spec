@@ -15,7 +15,14 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define	_plugindir	%{_libdir}/nagios/grapher
 
 %description
-This plugin allows you to
+NagiosGrapher collects the output of NagiosPlugins and generates graphs.
+
+- get values from nagios without patching (eg. through "process-service-perfdata")
+- realtime graphing (5 minutes delay at maximum)
+- recoginzing new hosts/services and automatic graphing of these
+- auto pruning and abstructing of stored values
+- very slim backend - no need of a database systems
+- easy to install 
 
 %description -l pl
 Ta wtyczka pozwala na
