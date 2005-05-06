@@ -30,8 +30,6 @@ Ta wtyczka pozwala na
 %prep
 %setup -q -n nagios_grapher-%{version}
 
-%build
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_plugindir},%{_datadir}/nagios/images,%{_sysconfdir}/rc.d/init.d,%{_libdir}/nagios/cgi/,%{_sysconfdir}/nagios}
