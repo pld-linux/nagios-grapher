@@ -1,4 +1,4 @@
-Summary:	Plugins for Nagios to integrations with RRDTool
+Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
 Version:	1.0a1
@@ -15,31 +15,41 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define	_plugindir	%{_libdir}/nagios/grapher
 
 %description
-NagiosGrapher collects the output of NagiosPlugins and generates graphs.
+NagiosGrapher collects the output of NagiosPlugins and generates
+graphs.
 
-- get values from nagios without patching (eg. through "process-service-perfdata")
+- get values from nagios without patching (eg. through
+  "process-service-perfdata")
 - realtime graphing (5 minutes delay at maximum)
-- recoginzing new hosts/services and automatic graphing of these
-- auto pruning and abstructing of stored values
+- recognizing new hosts/services and automatic graphing of these
+- auto pruning and abstracting of stored values
 - very slim backend - no need of a database systems
 - easy to install 
 
 %description -l pl
-Ta wtyczka pozwala na
+NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
+
+- pobieranie warto¶ci z nagiosa bez ³atania (np. poprzez
+  "process-service-perfdata")
+- wykresy w czasie rzeczywistym (maksymalne opó¼nienie 5 minut)
+- rozpoznawanie nowych hostów/us³ug i automatyczne rysowanie ich
+- automatyczne czyszczenie i wyci±ganie zapisanych warto¶ci
+- bardzo lekki backend - nie wymagaj±cy systemów baz danych
+- ³atwy w instalacji
 
 %prep
 %setup -q -n nagios_grapher-%{version}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_plugindir},%{_datadir}/nagios/images,%{_sysconfdir}/rc.d/init.d,%{_libdir}/nagios/cgi/,%{_sysconfdir}/nagios}
+install -d $RPM_BUILD_ROOT{%{_plugindir},%{_datadir}/nagios/images,/etc/rc.d/init.d,%{_libdir}/nagios/cgi/,%{_sysconfdir}/nagios}
 
 install collect2.pl	$RPM_BUILD_ROOT%{_plugindir}/collect2.pl
 install dot.png		$RPM_BUILD_ROOT%{_datadir}/nagios/images/dot.png
 install fifo_write.pl	$RPM_BUILD_ROOT%{_plugindir}/fifo_write.pl
 install graph.png	$RPM_BUILD_ROOT%{_datadir}/nagios/images/graph.png
 install graphs.cgi	$RPM_BUILD_ROOT%{_libdir}/nagios/cgi/graphs.cgi
-install nagios_grapher	$RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/nagios_grapher
+install nagios_grapher	$RPM_BUILD_ROOT/etc/rc.d/init.d/nagios_grapher
 install NagiosGrapher.pm $RPM_BUILD_ROOT%{_plugindir}/NagiosGrapher.pm
 install ngraph.cfg	$RPM_BUILD_ROOT%{_sysconfdir}/nagios/ngraph.cfg
 install rrd2-graph.cgi	$RPM_BUILD_ROOT%{_libdir}/nagios/cgi/rrd2-graph.cgi
