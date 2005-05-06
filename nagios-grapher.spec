@@ -8,15 +8,14 @@ Group: 		Applications/System
 Source0:	nagios_grapher-%{version}.tar.bz2
 # Source0-md5:	ebde01f5ec38925b3a6ad6c6b3b5f8c3
 URL:		http://www.nagiosexchange.org/Charts.42.0.html?&tx_netnagext_pi1[p_view]=195	
-Requires:	nagios
 Requires:	nagios-cgi
 Requires:	rrdtool
-
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define	_plugindir	%{_libdir}/nagios/grapher
+
 %description
-This plugin allow you to 
+This plugin allows you to 
 
 %description -l pl
 Ta wtyczka pozwala na 
@@ -40,11 +39,8 @@ install NagiosGrapher.pm $RPM_BUILD_ROOT%{_plugindir}/NagiosGrapher.pm
 install ngraph.cfg	$RPM_BUILD_ROOT%{_sysconfdir}/nagios/ngraph.cfg
 install rrd2-graph.cgi	$RPM_BUILD_ROOT%{_libdir}/nagios/cgi/rrd2-graph.cgi	
 
-
 cd $RPM_BUILD_ROOT%{_libdir}/nagios/cgi
 ln -sf	%{_plugindir}/NagiosGrapher.pm NagiosGrapher.pm
-
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
