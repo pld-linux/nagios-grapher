@@ -10,6 +10,7 @@ Source0:	nagios_grapher-%{version}.tar.bz2
 URL:		http://tinyurl.com/ad67c
 Requires:	nagios-cgi
 Requires:	rrdtool
+Requires:	perl-XML-Simple
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildArch:      noarch
 
@@ -24,7 +25,7 @@ graphs.
 - realtime graphing (5 minutes delay at maximum)
 - recognizing new hosts/services and automatic graphing of these
 - auto pruning and abstracting of stored values
-- very slim backend - no need of a database systems
+- very slim backend - no need of a database systems rrdtool
 - easy to install 
 
 %description -l pl
@@ -35,7 +36,7 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 - wykresy w czasie rzeczywistym (maksymalne opó¼nienie 5 minut)
 - rozpoznawanie nowych hostów/us³ug i automatyczne rysowanie ich
 - automatyczne czyszczenie i wyci±ganie zapisanych warto¶ci
-- bardzo lekki backend - nie wymagaj±cy systemów baz danych
+- bardzo lekki backend - nie wymagaj±cy systemów baz danych 
 - ³atwy w instalacji
 
 %prep
