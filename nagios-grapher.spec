@@ -11,6 +11,7 @@ URL:		http://tinyurl.com/ad67c
 Requires:	nagios-cgi
 Requires:	rrdtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildArch:      noarch
 
 %define	_plugindir	%{_libdir}/nagios/grapher
 
