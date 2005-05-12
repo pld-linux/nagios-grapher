@@ -1,0 +1,44 @@
+#!/bin/bash
+#
+# Start the nagios_grapher
+#
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+NAME=collect2.pl
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+DAEMON=/usr/lib/nagios/grapher/collect2.pl
+USER=nagios
+export PATH
+
+test -f $DAEMON || exit 0
+
+case "$1" in
+    start)
+        echo -n "Starting collector: $NAME"
+        daemon --user $USER /usr/bin/perl $DAEMON
+        ;;
+    
+    stop)
+        echo -n "Stopping collector: $NAME"
+        killproc --signal KILL --name $NAME
+        ;;
+    
+    reload)
+        echo -n "Reloading $NAME configuration"
+        daemon --stop --signal HUP --name $NAME
+        ;;
+
+    *)
+        echo "Usage: $NAME {start|stop|reload}"
+        ;;
+esac
+
+if [ $? == 0 ]; then
+    echo .
+    exit 0
+else
+    echo failed
+    exit 1
+fi
