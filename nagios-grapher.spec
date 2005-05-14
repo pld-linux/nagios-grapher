@@ -2,7 +2,7 @@ Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
 Version:	1.0a1
-Release:	0.1
+Release:	0.3
 License:	GPL
 Group:		Applications/System
 Source0:	nagios_grapher-%{version}.tar.bz2
@@ -14,7 +14,7 @@ Requires:	perl-XML-Simple
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define	_plugindir	%{_libdir}/nagios/grapher
+%define		_plugindir	%{_libdir}/nagios/grapher
 
 %description
 NagiosGrapher collects the output of NagiosPlugins and generates
@@ -56,17 +56,16 @@ install NagiosGrapher.pm $RPM_BUILD_ROOT%{_plugindir}/NagiosGrapher.pm
 install ngraph.cfg	$RPM_BUILD_ROOT%{_sysconfdir}/nagios/ngraph.cfg
 install rrd2-graph.cgi	$RPM_BUILD_ROOT%{_libdir}/nagios/cgi/rrd2-graph.cgi
 
-cd $RPM_BUILD_ROOT%{_libdir}/nagios/cgi
-ln -sf	%{_plugindir}/NagiosGrapher.pm NagiosGrapher.pm
+ln -s %{_plugindir}/NagiosGrapher.pm $RPM_BUILD_ROOT%{_libdir}/nagios/cgi/NagiosGrapher.pm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-#%doc
-%attr(755,root,root) %{_plugindir}/*
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nagios/ngraph.cfg
+%dir %{_plugindir}
+%attr(755,root,root) %{_plugindir}/*
 %attr(754,root,root) /etc/rc.d/init.d/nagios_grapher
 %attr(755,root,root) %{_libdir}/nagios/cgi/*
 %{_datadir}/nagios/images/*
