@@ -5,7 +5,7 @@ Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
 Version:	1.6
-Release:	0.3
+Release:	0.4
 License:	GPL
 Group:		Applications/System
 Source0:	NagiosGrapher-%{version}-rc1.tar.bz2
@@ -13,6 +13,7 @@ Source0:	NagiosGrapher-%{version}-rc1.tar.bz2
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-install_init.patch
 Patch2:		%{name}-init.patch
+Patch3:		%{name}-dirlayout.patch
 URL:		http://tinyurl.com/ad67c
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
@@ -54,6 +55,7 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 
 %build
@@ -64,29 +66,17 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 	--with-nagios-group=nagios \
 	--with-ng-interface=network \
 	--with-ng-srvext-type=MULTIPLE \
-	--with-ng-loglevel=INT 
+	--with-ng-loglevel=INT \
+	--with-layout=PLD 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d/
-install -d $RPM_BUILD_ROOT/%{_var}/log
+install -d $RPM_BUILD_ROOT/%{_var}/log/nagios
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	NAGIOS_IMAGES=%{_datadir}/nagios/images/ \
-	NAGIOS_IMAGES_LOGOS=%{_datadir}/nagios/images/ \
-	NG_CONFIG=%{_sysconfdir}/nagios/ \
-	NG_CONFIG_SUB=%{_sysconfdir}/nagios/ \
-	NG_CONFIG_CGI=%{_sysconfdir}/nagios/ \
-	NAGIOS_FOLDER_CGI=%{_datadir}/nagios/cgi \
-	PERL_INC=%{perl_vendorlib} \
-	NAGIOS_CONTRIBUTION=%{_plugindir} \
-	NG_LOGFILE=%{_var}/log \
-	
-#NG_SRVEXT_DIR=/dir1 \
-#NG_RRD=/dir \
-#NAGIOS_BIN=/dir
-#NG_SRVEXT_DIR/dir
+	DESTDIR=$RPM_BUILD_ROOT
+
 rm $RPM_BUILD_ROOT/etc/rc.d/init.d/nagios_grapher
 install contrib/nagios_grapher.redhat	$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 #ln -s %{_plugindir}/NagiosGrapher.pm $RPM_BUILD_ROOT%{_libdir}/nagios/cgi/NagiosGrapher.pm
@@ -109,11 +99,11 @@ fi
 %doc README
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 #%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nagios/extra/*.ncfg
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nagios/standard/*.ncfg
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nagios/ngraph.d/*
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nagios/*.ncfg
 %dir %{_plugindir}
 %attr(755,root,root) %{_plugindir}/*
 %attr(755,root,root) %{_datadir}/nagios/cgi/*
 %attr(755,root,root) %{perl_vendorlib}/*
 %{_datadir}/nagios/images/*
+%config(noreplace) %verify(not md5 mtime size) %{_var}/log/nagios/ngraph.log
