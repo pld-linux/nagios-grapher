@@ -1,13 +1,20 @@
+#TODO
+# -file in BUILD/.../{contrib,doc,tools}
+
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
-Version:	1.0a1
-Release:	0.3
+Version:	1.6
+Release:	0.1
 License:	GPL
 Group:		Applications/System
-Source0:	nagios_grapher-%{version}.tar.bz2
-# Source0-md5:	ebde01f5ec38925b3a6ad6c6b3b5f8c3
+Source0:	NagiosGrapher-%{version}-rc1.tar.bz2
+# Source0-md5:	fdcc43b490f5d3f66d42e4305c61fdbb
+Patch0:		%{name}-install.patch
+Patch1:		%{name}-install_init.patch
 URL:		http://tinyurl.com/ad67c
+BuildRequires:	rpmbuild(macros) >= 1.228
+Requires(post,preun):	/sbin/chkconfig
 Requires:	nagios-cgi
 Requires:	rrdtool
 Requires:	perl-XML-Simple
@@ -40,32 +47,65 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 - ³atwy w instalacji
 
 %prep
-%setup -q -n nagios_grapher-%{version}
+%setup -q -n NagiosGrapher-%{version}-rc1
+%patch0 -p1
+%patch1 -p1
+
+%build
+%configure \
+	--with-web-user=http \
+	--with-web-group=http \
+	--with-nagios-user=nagios \
+	--with-nagios-group=nagios \
+	--with-ng-interface=network \
+	--with-ng-srvext-type=MULTIPLE \
+	--with-ng-loglevel=INT 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_plugindir},%{_datadir}/nagios/images,/etc/rc.d/init.d,%{_libdir}/nagios/cgi/,%{_sysconfdir}/nagios}
+install -d $RPM_BUILD_ROOT/etc/rc.d/init.d/
+install -d $RPM_BUILD_ROOT/%{_var}/log
 
-install collect2.pl	$RPM_BUILD_ROOT%{_plugindir}/collect2.pl
-install dot.png		$RPM_BUILD_ROOT%{_datadir}/nagios/images/dot.png
-install fifo_write.pl	$RPM_BUILD_ROOT%{_plugindir}/fifo_write.pl
-install graph.png	$RPM_BUILD_ROOT%{_datadir}/nagios/images/graph.png
-install graphs.cgi	$RPM_BUILD_ROOT%{_libdir}/nagios/cgi/graphs.cgi
-install nagios_grapher	$RPM_BUILD_ROOT/etc/rc.d/init.d/nagios_grapher
-install NagiosGrapher.pm $RPM_BUILD_ROOT%{_plugindir}/NagiosGrapher.pm
-install ngraph.cfg	$RPM_BUILD_ROOT%{_sysconfdir}/nagios/ngraph.cfg
-install rrd2-graph.cgi	$RPM_BUILD_ROOT%{_libdir}/nagios/cgi/rrd2-graph.cgi
-
-ln -s %{_plugindir}/NagiosGrapher.pm $RPM_BUILD_ROOT%{_libdir}/nagios/cgi/NagiosGrapher.pm
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	NAGIOS_IMAGES=%{_datadir}/nagios/images/ \
+	NAGIOS_IMAGES_LOGOS=%{_datadir}/nagios/images/ \
+	NG_CONFIG=%{_sysconfdir}/nagios/ \
+	NG_CONFIG_SUB=%{_sysconfdir}/nagios/ \
+	NG_CONFIG_CGI=%{_sysconfdir}/nagios/ \
+	NAGIOS_FOLDER_CGI=%{_datadir}/nagios/cgi \
+	PERL_INC=%{_plugindir}/ \
+	NAGIOS_CONTRIBUTION=%{_plugindir} \
+	NG_LOGFILE=%{_var}/log \
+	
+#NG_SRVEXT_DIR=/dir1 \
+#NG_RRD=/dir \
+#NAGIOS_BIN=/dir
+#NG_SRVEXT_DIR/dir
+#install contrib/nagios_grapher.redhat	$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+#ln -s %{_plugindir}/NagiosGrapher.pm $RPM_BUILD_ROOT%{_libdir}/nagios/cgi/NagiosGrapher.pm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+/sbin/chkconfig --add nagios_grapher
+%service nagios_grapher restart
+
+%preun
+if [ "$1" = "0" ]; then
+	%service -q nagios_grapher stop
+	/sbin/chkconfig --del nagios_grapher
+fi
+
 %files
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nagios/ngraph.cfg
+%attr(754,root,root) /etc/rc.d/init.d/nagios_grapher
+#%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nagios/extra/*.ncfg
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nagios/standard/*.ncfg
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nagios/*.ncfg
 %dir %{_plugindir}
 %attr(755,root,root) %{_plugindir}/*
-%attr(754,root,root) /etc/rc.d/init.d/nagios_grapher
-%attr(755,root,root) %{_libdir}/nagios/cgi/*
+%attr(755,root,root) %{_datadir}/nagios/cgi/*
 %{_datadir}/nagios/images/*
