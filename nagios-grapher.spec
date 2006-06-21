@@ -1,6 +1,5 @@
 #TODO
 # -file in BUILD/.../{contrib,doc,tools}
-# - noarch?
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
@@ -22,7 +21,6 @@ Requires:	rrdtool
 Requires:	perl-XML-Simple
 Requires:	perl-rrdtool
 Requires:	perl-GD
-BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_plugindir	%{_libdir}/nagios/grapher
