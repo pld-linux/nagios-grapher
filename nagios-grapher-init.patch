@@ -1,0 +1,12 @@
+diff -uNr NagiosGrapher-1.6-rc1.orig/contrib/nagios_grapher.redhat NagiosGrapher-1.6-rc1/contrib/nagios_grapher.redhat
+--- NagiosGrapher-1.6-rc1.orig/contrib/nagios_grapher.redhat	2006-04-28 10:56:06.000000000 +0200
++++ NagiosGrapher-1.6-rc1/contrib/nagios_grapher.redhat	2006-06-21 16:37:05.000000000 +0200
+@@ -8,7 +8,7 @@
+ 
+ NAME=collect2.pl
+ PATH=/bin:/usr/bin:/sbin:/usr/sbin
+-DAEMON=/usr/lib/nagios/contrib/nagios_grapher/collect2.pl
++DAEMON=/usr/lib/nagios/grapher/collect2.pl
+ USER=nagios
+ export PATH
+ 
