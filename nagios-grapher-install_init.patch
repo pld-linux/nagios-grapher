@@ -1,0 +1,11 @@
+diff -uNr NagiosGrapher-1.6-rc1.orig/Makefile.in NagiosGrapher-1.6-rc1/Makefile.in
+--- NagiosGrapher-1.6-rc1.orig/Makefile.in	2006-06-07 18:22:37.000000000 +0200
++++ NagiosGrapher-1.6-rc1/Makefile.in	2006-06-21 15:21:46.000000000 +0200
+@@ -179,7 +179,7 @@
+ 	cp NagiosGrapher.pm $(DESTDIR)/$(PERL_INC)
+ 
+ init-script:
+-	cp nagios_grapher /etc/init.d
++	cp nagios_grapher $(DESTDIR)/etc/rc.d/init.d
+ 
+ image-install:
