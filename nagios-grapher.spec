@@ -99,11 +99,11 @@ fi
 %doc README
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 #%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
-%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios,750) %{_sysconfdir}/nagios/ngraph.d/*
-%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios,750) %{_sysconfdir}/nagios/*.ncfg
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/ngraph.d/*
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/*.ncfg
 %dir %{_plugindir}
 %attr(755,root,root) %{_plugindir}/*
-%attr(755,root,root) %{_datadir}/nagios/cgi/*
+%attr(755,root,root) %{_libdir}/nagios/cgi/*
 %attr(755,root,root) %{perl_vendorlib}/*
 %{_datadir}/nagios/images/*
-%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios,750) %{_var}/log/nagios/ngraph.log
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_var}/log/nagios/ngraph.log
