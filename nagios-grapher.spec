@@ -112,4 +112,4 @@ fi
 %attr(755,root,root) %{_libdir}/nagios/cgi/*
 %attr(755,root,root) %{perl_vendorlib}/*
 %{_datadir}/nagios/images/*
-%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_var}/log/nagios/ngraph.log
+%config(noreplace) %verify(not md5 mtime size) %attr(660,root,nagios) %{_var}/log/nagios/ngraph.log
