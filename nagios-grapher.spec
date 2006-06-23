@@ -1,10 +1,12 @@
 #TODO
 # -file in BUILD/.../{contrib,doc,tools}
+# - read INSTALL: deps, 
+# - send directory layout for PLD to author
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
 Version:	1.6
-Release:	0.4
+Release:	0.5
 License:	GPL
 Group:		Applications/System
 Source0:	NagiosGrapher-%{version}-rc1.tar.bz2
@@ -16,10 +18,12 @@ Patch3:		%{name}-dirlayout.patch
 URL:		http://tinyurl.com/ad67c
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
+Requires:	ImageMagick-perl
 Requires:	nagios-cgi
 Requires:	perl-GD
 Requires:	perl-XML-Simple
 Requires:	perl-rrdtool
+Requires:	perl-Time-HiRes
 Requires:	rrdtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
