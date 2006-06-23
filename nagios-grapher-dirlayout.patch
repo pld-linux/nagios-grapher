@@ -17,10 +17,10 @@ diff -uNr NagiosGrapher-1.6-rc1.orig/config.layout NagiosGrapher-1.6-rc1/config.
 +  nagios_contribution:			${libdir}/nagios/grapher
 +  ng_config:				/etc/nagios
 +  ng_config_sub:			${ng_config}/ngraph.d
-+  ng_daemon:				/var/lib/nagios_grapher
++  ng_daemon:				/var/lib/nagios/nagios_grapher
 +  ng_srvext_file:			/etc/nagios/serviceext.cfg
 +  ng_srvext_dir:			/etc/nagios/serviceext
-+  ng_interface_pipe:			/var/rw/ngraph.pipe
++  ng_interface_pipe:			/var/lib/nagios/rw/ngraph.pipe
 +  ng_logfile:				/var/log/nagios/ngraph.log
 +  ng_rrd:				/var/lib/nagios/rrd
 +</Layout>
