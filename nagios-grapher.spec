@@ -2,6 +2,8 @@
 # -file in BUILD/.../{contrib,doc,tools}
 # - read INSTALL: deps, 
 # - send directory layout for PLD to author
+# - bconds
+# - remowe/subpackage *.c contrib files
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
@@ -68,7 +70,8 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 	--with-ng-interface=network \
 	--with-ng-srvext-type=MULTIPLE \
 	--with-ng-loglevel=INT \
-	--with-layout=PLD 
+	--with-layout=PLD \
+	--with-ng-interface=pipe 
 
 %install
 rm -rf $RPM_BUILD_ROOT
