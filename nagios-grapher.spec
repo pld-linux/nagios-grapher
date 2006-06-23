@@ -17,10 +17,10 @@ URL:		http://tinyurl.com/ad67c
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
 Requires:	nagios-cgi
-Requires:	rrdtool
+Requires:	perl-GD
 Requires:	perl-XML-Simple
 Requires:	perl-rrdtool
-Requires:	perl-GD
+Requires:	rrdtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_plugindir	%{_libdir}/nagios/grapher
@@ -29,7 +29,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 NagiosGrapher collects the output of NagiosPlugins and generates
 graphs.
 
-- get values from nagios without patching (eg. through
+- get values from Nagios without patching (eg. through
   "process-service-perfdata")
 - realtime graphing (5 minutes delay at maximum)
 - recognizing new hosts/services and automatic graphing of these
@@ -40,7 +40,7 @@ graphs.
 %description -l pl
 NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 
-- pobieranie warto¶ci z nagiosa bez ³atania (np. poprzez
+- pobieranie warto¶ci z Nagiosa bez ³atania (np. poprzez
   "process-service-perfdata")
 - wykresy w czasie rzeczywistym (maksymalne opó¼nienie 5 minut)
 - rozpoznawanie nowych hostów/us³ug i automatyczne rysowanie ich
@@ -55,7 +55,6 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 %patch2 -p1
 %patch3 -p1
 
-
 %build
 %configure \
 	--with-web-user=http \
@@ -69,8 +68,8 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/rc.d/init.d/
-install -d $RPM_BUILD_ROOT/%{_var}/log/nagios
+install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
+install -d $RPM_BUILD_ROOT%{_var}/log/nagios
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
