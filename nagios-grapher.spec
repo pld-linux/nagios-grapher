@@ -6,7 +6,7 @@ Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
 Version:	1.6
-Release:	0.5
+Release:	0.6
 License:	GPL
 Group:		Applications/System
 Source0:	NagiosGrapher-%{version}-rc1.tar.bz2
@@ -73,6 +73,7 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
+install -d $RPM_BUILD_ROOT/etc/nagios/serviceext
 install -d $RPM_BUILD_ROOT%{_var}/log/nagios
 
 %{__make} install \
@@ -80,7 +81,6 @@ install -d $RPM_BUILD_ROOT%{_var}/log/nagios
 
 rm $RPM_BUILD_ROOT/etc/rc.d/init.d/nagios_grapher
 install contrib/nagios_grapher.redhat	$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-#ln -s %{_plugindir}/NagiosGrapher.pm $RPM_BUILD_ROOT%{_libdir}/nagios/cgi/NagiosGrapher.pm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -99,9 +99,11 @@ fi
 %defattr(644,root,root,755)
 %doc README
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
-#%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
+#%%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/ngraph.d/*
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/*.ncfg
+%dir %{_sysconfdir}/nagios/serviceext
+#%%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/serviceext/*
 %dir %{_plugindir}
 %attr(755,root,root) %{_plugindir}/*
 %attr(755,root,root) %{_libdir}/nagios/cgi/*
