@@ -69,9 +69,9 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 	--with-nagios-group=nagios \
 	--with-ng-interface=network \
 	--with-ng-srvext-type=MULTIPLE \
-	--with-ng-loglevel=INT \
+	--with-ng-loglevel=255 \
 	--with-layout=PLD \
-	--with-ng-interface=pipe 
+	--with-ng-interface=pipe
 
 %install
 rm -rf $RPM_BUILD_ROOT
