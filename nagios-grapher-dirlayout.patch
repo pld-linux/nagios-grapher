@@ -11,7 +11,7 @@ diff -uNr NagiosGrapher-1.6-rc1.orig/config.layout NagiosGrapher-1.6-rc1/config.
 +  nagios_config:			/etc/nagios/nagios.cfg
 +  nagios_config_cgi:			/etc/nagios/cgi.cfg
 +  nagios_images:			${datadir}/nagios/images
-+  nagios_images_logos:			${datadir}/nagios/images
++  nagios_images_logos:			${datadir}/nagios/images/logos
 +  nagios_folder_cgi:			${libdir}/nagios/cgi 
 +  perl_inc:				${datadir}/perl5/vendor_perl
 +  nagios_contribution:			${libdir}/nagios/grapher
