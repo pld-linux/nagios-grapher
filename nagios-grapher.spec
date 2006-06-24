@@ -67,7 +67,6 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 	--with-web-group=http \
 	--with-nagios-user=nagios \
 	--with-nagios-group=nagios \
-	--with-ng-interface=network \
 	--with-ng-srvext-type=MULTIPLE \
 	--with-ng-loglevel=255 \
 	--with-layout=PLD \
