@@ -1,9 +1,10 @@
 #TODO
-# -file in BUILD/.../{contrib,doc,tools}
+# - add file in BUILD/.../{contrib,doc,tools}
 # - read INSTALL: deps, 
-# - send directory layout for PLD to author
+# - send directory layout for PLD to author, add path to rrd font
 # - bconds
 # - remowe/subpackage *.c contrib files
+
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
@@ -26,6 +27,8 @@ Requires:	perl-GD
 Requires:	perl-XML-Simple
 Requires:	perl-rrdtool
 Requires:	perl-Time-HiRes
+Requires:	perl-URI
+Requires:	perl-IO-All
 Requires:	rrdtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -51,7 +54,7 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 - wykresy w czasie rzeczywistym (maksymalne opó¼nienie 5 minut)
 - rozpoznawanie nowych hostów/us³ug i automatyczne rysowanie ich
 - automatyczne czyszczenie i wyci±ganie zapisanych warto¶ci
-- bardzo lekki backend - nie wymagaj±cy systemów baz danych 
+- bardzo lekki backend - nie wymagaj±cy systemów baz danych - rrdtool
 - ³atwy w instalacji
 
 %prep
@@ -77,12 +80,14 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 install -d $RPM_BUILD_ROOT/etc/nagios/serviceext
 install -d $RPM_BUILD_ROOT%{_var}/log/nagios
+install -d $RPM_BUILD_ROOT%{_var}/lib/nagios/nagios_grapher
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 rm $RPM_BUILD_ROOT/etc/rc.d/init.d/nagios_grapher
 install contrib/nagios_grapher.redhat	$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+install dot.png	$RPM_BUILD_ROOT%{_datadir}/nagios/images/logos/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -111,4 +116,5 @@ fi
 %attr(755,root,root) %{_libdir}/nagios/cgi/*
 %attr(755,root,root) %{perl_vendorlib}/*
 %{_datadir}/nagios/images/*
+%dir %{_var}/lib/nagios/nagios_grapher
 %config(noreplace) %verify(not md5 mtime size) %attr(660,root,nagios) %{_var}/log/nagios/ngraph.log
