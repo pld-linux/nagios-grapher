@@ -1,6 +1,5 @@
 #TODO
-# - add file in BUILD/.../{contrib,doc,tools}
-# - read INSTALL: deps, 
+# - add file in BUILD/.../{contrib,doc,tools} 
 # - send directory layout for PLD to author, add path to rrd font
 # - bconds
 # - remowe/subpackage *.c contrib files
@@ -29,6 +28,7 @@ Requires:	perl-rrdtool
 Requires:	perl-Time-HiRes
 Requires:	perl-URI
 Requires:	perl-IO-All
+Requires:	perl-XML-Parser
 Requires:	rrdtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
