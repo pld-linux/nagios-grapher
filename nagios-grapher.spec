@@ -1,6 +1,7 @@
 #TODO
-# - add file in BUILD/.../{contrib,doc,tools} 
+# - add file in BUILD/.../{contrib,tools} 
 # - send directory layout for PLD to author, add path to rrd font
+# - change path for rrd font
 # - bconds
 # - remowe/subpackage *.c contrib files
 
@@ -104,7 +105,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README
+%doc README doc
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 #%%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/ngraph.d/*
