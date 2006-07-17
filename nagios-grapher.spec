@@ -1,10 +1,10 @@
-#TODO
+# TODO
 # - add file in BUILD/.../{contrib,tools} 
 # - send directory layout for PLD to author, add path to rrd font
 # - change path for rrd font
 # - bconds
-# - remowe/subpackage *.c contrib files
-
+# - remove/subpackage *.c contrib files
+# - service nagios-grapher does not support chkconfig
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
@@ -94,13 +94,13 @@ install dot.png	$RPM_BUILD_ROOT%{_datadir}/nagios/images/logos/
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/chkconfig --add %{name}
+#/sbin/chkconfig --add %{name}
 %service %{name} restart
 
 %preun
 if [ "$1" = "0" ]; then
 	%service -q %{name} stop
-	/sbin/chkconfig --del %{name}
+#	/sbin/chkconfig --del %{name}
 fi
 
 %files
