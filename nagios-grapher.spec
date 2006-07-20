@@ -1,6 +1,5 @@
 # TODO
 # - add file in BUILD/.../{contrib,tools} 
-# - send directory layout for PLD to author, add path to rrd font
 # - change path for rrd font
 # - bconds
 # - remove/subpackage *.c contrib files
