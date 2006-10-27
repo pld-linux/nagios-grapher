@@ -28,6 +28,7 @@ Requires:	perl-Time-HiRes
 Requires:	perl-URI
 Requires:	perl-IO-All
 Requires:	perl-XML-Parser
+Requires:	perl-HTML-Calendar-Simple
 Requires:	rrdtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
