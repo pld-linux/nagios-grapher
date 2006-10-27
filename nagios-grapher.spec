@@ -1,13 +1,14 @@
 # TODO
 # - add file in BUILD/.../{contrib,tools} 
 # - change path for rrd font in ngraph.ncfg
+# - change serviceextinfo file in dir layout
 # - bconds for network/pipe
 # - service nagios-grapher does not support chkconfig
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
 Version:	1.6.1
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Applications/System
 Source0:	NagiosGrapher-%{version}-rc1.tar.bz2
