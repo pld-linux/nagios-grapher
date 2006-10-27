@@ -1,22 +1,21 @@
 # TODO
 # - add file in BUILD/.../{contrib,tools} 
-# - change path for rrd font
-# - bconds
-# - remove/subpackage *.c contrib files
+# - change path for rrd font in ngraph.ncfg
+# - bconds for network/pipe
 # - service nagios-grapher does not support chkconfig
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
-Version:	1.6
-Release:	0.7
+Version:	1.6.1
+Release:	0.1
 License:	GPL
 Group:		Applications/System
 Source0:	NagiosGrapher-%{version}-rc1.tar.bz2
-# Source0-md5:	fdcc43b490f5d3f66d42e4305c61fdbb
+# Source0-md5:	3bb2029ee72341fe4529d540d8b7bf9f
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-install_init.patch
 Patch2:		%{name}-init.patch
-Patch3:		%{name}-dirlayout.patch
+Patch3:		%{name}-syntax_error.patch
 URL:		http://tinyurl.com/ad67c
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
@@ -58,20 +57,22 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 - ³atwy w instalacji
 
 %prep
-%setup -q -n NagiosGrapher-%{version}-rc1
+%setup -q -c -a 0  
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
 %build
+%{__autoconf}
+
 %configure \
 	--with-web-user=http \
 	--with-web-group=http \
 	--with-nagios-user=nagios \
-	--with-nagios-group=nagios \
+	--with-nagios-group=nagios-data \
 	--with-ng-srvext-type=MULTIPLE \
-	--with-ng-loglevel=255 \
+	--with-ng-loglevel=355 \
 	--with-layout=PLD \
 	--with-ng-interface=network
 
@@ -85,9 +86,10 @@ install -d $RPM_BUILD_ROOT%{_var}/lib/nagios/nagios_grapher
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm $RPM_BUILD_ROOT/etc/rc.d/init.d/nagios_grapher
+rm -f $RPM_BUILD_ROOT/etc/rc.d/init.d/nagios_grapher
+rm -f $RPM_BUILD_ROOT/usr/lib/nagios/grapher/*.c
+
 install contrib/nagios_grapher.redhat	$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
-install dot.png	$RPM_BUILD_ROOT%{_datadir}/nagios/images/logos/
 
 %clean
 rm -rf $RPM_BUILD_ROOT

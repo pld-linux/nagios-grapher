@@ -1,0 +1,13 @@
+Files nagios-grapher-1.6.1.orig/.configure.ac.swp and nagios-grapher-1.6.1/.configure.ac.swp differ
+diff -uNr nagios-grapher-1.6.1.orig/configure.ac nagios-grapher-1.6.1/configure.ac
+--- nagios-grapher-1.6.1.orig/configure.ac	2006-06-12 15:29:45.000000000 +0000
++++ nagios-grapher-1.6.1/configure.ac	2006-10-24 21:07:31.000000000 +0000
+@@ -248,7 +248,7 @@
+ 
+ dnl NG_INTERFACE
+ AC_ARG_WITH(ng-interface,
+-	AC_HELP_STRING(--with-ng-interface=INTERFACE], [the interface to use (default: network)]),
++	AC_HELP_STRING([--with-ng-interface=INTERFACE], [the interface to use (default: network)]),
+ 	NG_INTERFACE=$withval,
+ 	NG_INTERFACE=network
+ )

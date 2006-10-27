@@ -5,7 +5,7 @@ diff -uNr NagiosGrapher-1.6-rc1.orig/Makefile.in NagiosGrapher-1.6-rc1/Makefile.
  	cp NagiosGrapher.pm $(DESTDIR)/$(PERL_INC)
  
  init-script:
--	cp nagios_grapher /etc/init.d
+-	cp nagios_grapher $(DESTDIR)/etc/init.d
 +	cp nagios_grapher $(DESTDIR)/etc/rc.d/init.d
  
  image-install:
