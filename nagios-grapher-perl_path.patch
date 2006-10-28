@@ -1,0 +1,12 @@
+diff -uNr nagios-grapher-1.6.1.orig/sbin/graphs.cgi nagios-grapher-1.6.1/sbin/graphs.cgi
+--- nagios-grapher-1.6.1.orig/sbin/graphs.cgi	2006-08-01 10:10:41.000000000 +0000
++++ nagios-grapher-1.6.1/sbin/graphs.cgi	2006-10-28 22:40:43.000000000 +0000
+@@ -350,7 +350,7 @@
+ }
+ 
+ sub action_showcalendar {
+-  use Calendar::Simple;
++  use HTML::Calendar::Simple;
+ 
+   my @today = localtime( time() );
+ 
