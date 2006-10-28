@@ -1,7 +1,5 @@
 # TODO
-# - add file in BUILD/.../{contrib,tools} 
 # - change path for rrd font in ngraph.ncfg
-# - change serviceextinfo file in dir layout
 # - bconds for network/pipe
 # - service nagios-grapher does not support chkconfig
 Summary:	Plugins for Nagios to integration with RRDTool
@@ -17,6 +15,7 @@ Patch0:		%{name}-install.patch
 Patch1:		%{name}-install_init.patch
 Patch2:		%{name}-init.patch
 Patch3:		%{name}-syntax_error.patch
+Patch4:		%{name}-extinfo_file.patch
 URL:		http://tinyurl.com/ad67c
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
@@ -64,6 +63,7 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__autoconf}
@@ -92,6 +92,10 @@ rm -f $RPM_BUILD_ROOT/etc/rc.d/init.d/nagios_grapher
 rm -f $RPM_BUILD_ROOT/usr/lib/nagios/grapher/*.c
 
 install contrib/nagios_grapher.redhat	$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+install contrib/fifo_write/tcp/fifo_write_from_tcp.pl	$RPM_BUILD_ROOT%{_plugindir}/
+install contrib/fifo_write/udpsend.pl       $RPM_BUILD_ROOT%{_plugindir}/
+install contrib/rrd_commix/*[yl]       $RPM_BUILD_ROOT%{_plugindir}/
+cp contrib/rrd_commix/README contrib/rrd_commix/README-rrd_commix
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -108,7 +112,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README doc
+%doc README doc contrib/rrd_commix/README-rrd_commix
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 #%%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
 %config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/ngraph.d/*
