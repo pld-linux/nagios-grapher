@@ -1,0 +1,12 @@
+diff -uNr nagios-grapher-1.6.1.orig/config.layout nagios-grapher-1.6.1/config.layout
+--- nagios-grapher-1.6.1.orig/config.layout	2006-10-24 21:04:07.000000000 +0000
++++ nagios-grapher-1.6.1/config.layout	2006-10-28 20:24:33.000000000 +0000
+@@ -74,7 +74,7 @@
+   ng_config:                            /etc/nagios
+   ng_config_sub:                        ${ng_config}/ngraph.d
+   ng_daemon:                            /var/lib/nagios/nagios_grapher
+-  ng_srvext_file:                       /etc/nagios/serviceext.cfg
++  ng_srvext_file:                       /etc/nagios/serviceextinfo.cfg
+   ng_srvext_dir:                        /etc/nagios/serviceext
+   ng_interface_pipe:                    /var/lib/nagios/rw/ngraph.pipe
+   ng_logfile:                           /var/log/nagios/ngraph.log
