@@ -6,7 +6,7 @@ Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
 Version:	1.6.1
-Release:	0.2
+Release:	0.3
 License:	GPL
 Group:		Applications/System
 Source0:	NagiosGrapher-%{version}-rc1.tar.bz2
@@ -16,6 +16,7 @@ Patch1:		%{name}-install_init.patch
 Patch2:		%{name}-init.patch
 Patch3:		%{name}-syntax_error.patch
 Patch4:		%{name}-extinfo_file.patch
+Patch5:		%{name}-perl_path.patch
 URL:		http://tinyurl.com/ad67c
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
@@ -64,6 +65,7 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__autoconf}
@@ -124,5 +126,5 @@ fi
 %attr(755,root,root) %{_libdir}/nagios/cgi/*
 %attr(755,root,root) %{perl_vendorlib}/*
 %{_datadir}/nagios/images/*
-%dir %{_var}/lib/nagios/nagios_grapher
+%dir %attr(755,nagios,nagios-data) %{_var}/lib/nagios/nagios_grapher
 %config(noreplace) %verify(not md5 mtime size) %attr(660,root,nagios) %{_var}/log/nagios/ngraph.log
