@@ -1,7 +1,12 @@
 # TODO
-# - change path for rrd font in ngraph.ncfg
+# - path for rrd font from config.layout (patch for configure.ac and ngraph.ncfg.in)
 # - bconds for network/pipe
 # - service nagios-grapher does not support chkconfig
+# - logrotate config
+# - !! patch for collect2.pl - user,group,permision for files/dirs 
+#	defined in ngraph.ncfg (look %files section)
+# - !!	patch for lib/NagiosGrapher/Hooks/SrvExtWriteHostextInfo.pm line 94
+
 %include	/usr/lib/rpm/macros.perl
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
@@ -80,7 +85,7 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/nagios/serviceext
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/nagios/{serviceext,hostext}
 install -d $RPM_BUILD_ROOT%{_var}/log/nagios
 install -d $RPM_BUILD_ROOT%{_var}/lib/nagios/nagios_grapher
 
@@ -114,14 +119,15 @@ fi
 %doc README doc contrib/rrd_commix/README-rrd_commix
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 #%%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
-%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/ngraph.d/*
-%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/*.ncfg
-%dir  %attr(775,root,nagios) %{_sysconfdir}/nagios/serviceext
-#%%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/serviceext/*
+%config(noreplace) %verify(not md5 mtime size) %attr(640,nagios,nagios-data) %{_sysconfdir}/nagios/ngraph.d/*
+%config(noreplace) %verify(not md5 mtime size) %attr(640,nagios,nagios-data) %{_sysconfdir}/nagios/*.ncfg
+%dir  %attr(775,nagios,nagios-data) %{_sysconfdir}/nagios/serviceext
+%dir  %attr(775,nagios,nagios-data) %{_sysconfdir}/nagios/hostext
+#%%config(noreplace) %verify(not md5 mtime size) %attr(640,nagios,nagios-data) %{_sysconfdir}/nagios/serviceext/*
 %dir %{_plugindir}
 %attr(755,root,root) %{_plugindir}/*
 %attr(755,root,root) %{_libdir}/nagios/cgi/*
 %attr(755,root,root) %{perl_vendorlib}/*
 %{_datadir}/nagios/images/*
 %dir %attr(755,nagios,nagios-data) %{_var}/lib/nagios/nagios_grapher
-%config(noreplace) %verify(not md5 mtime size) %attr(660,root,nagios) %{_var}/log/nagios/ngraph.log
+%config(noreplace) %verify(not md5 mtime size) %attr(660,nagios,nagios-data) %{_var}/log/nagios/ngraph.log
