@@ -2,6 +2,7 @@
 # - change path for rrd font in ngraph.ncfg
 # - bconds for network/pipe
 # - service nagios-grapher does not support chkconfig
+%include	/usr/lib/rpm/macros.perl
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
@@ -17,20 +18,14 @@ Patch2:		%{name}-init.patch
 Patch3:		%{name}-syntax_error.patch
 Patch4:		%{name}-extinfo_file.patch
 Patch5:		%{name}-perl_path.patch
-Patch6:         %{name}-rrdfont_path.patch
+Patch6:		%{name}-rrdfont_path.patch
 URL:		http://tinyurl.com/ad67c
+BuildRequires:	rpm-perlprov
+BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
 Requires:	ImageMagick-perl
 Requires:	nagios-cgi
-Requires:	perl-GD
-Requires:	perl-XML-Simple
-Requires:	perl-rrdtool
-Requires:	perl-Time-HiRes
-Requires:	perl-URI
-Requires:	perl-IO-All
-Requires:	perl-XML-Parser
-Requires:	perl-HTML-Calendar-Simple
 Requires:	rrdtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -46,7 +41,7 @@ graphs.
 - recognizing new hosts/services and automatic graphing of these
 - auto pruning and abstracting of stored values
 - very slim backend - no need of a database systems rrdtool
-- easy to install 
+- easy to install
 
 %description -l pl
 NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
@@ -60,7 +55,7 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 - ³atwy w instalacji
 
 %prep
-%setup -q -c -a 0  
+%setup -q -c -a 0
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -85,7 +80,7 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
-install -d $RPM_BUILD_ROOT/etc/nagios/serviceext
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/nagios/serviceext
 install -d $RPM_BUILD_ROOT%{_var}/log/nagios
 install -d $RPM_BUILD_ROOT%{_var}/lib/nagios/nagios_grapher
 
@@ -93,7 +88,7 @@ install -d $RPM_BUILD_ROOT%{_var}/lib/nagios/nagios_grapher
 	DESTDIR=$RPM_BUILD_ROOT
 
 rm -f $RPM_BUILD_ROOT/etc/rc.d/init.d/nagios_grapher
-rm -f $RPM_BUILD_ROOT/usr/lib/nagios/grapher/*.c
+rm -f $RPM_BUILD_ROOT%{_plugindir}/*.c
 
 install contrib/nagios_grapher.redhat	$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install contrib/fifo_write/tcp/fifo_write_from_tcp.pl	$RPM_BUILD_ROOT%{_plugindir}/
