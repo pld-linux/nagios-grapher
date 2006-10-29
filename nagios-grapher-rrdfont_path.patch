@@ -1,0 +1,12 @@
+diff -uNr nagios-grapher-1.6.1.orig/cfg/ngraph.ncfg.in nagios-grapher-1.6.1/cfg/ngraph.ncfg.in
+--- nagios-grapher-1.6.1.orig/cfg/ngraph.ncfg.in	2006-09-25 15:05:55.000000000 +0000
++++ nagios-grapher-1.6.1/cfg/ngraph.ncfg.in	2006-10-29 00:05:47.000000000 +0000
+@@ -24,7 +24,7 @@
+         rrdpath                 @NG_RRD@/
+         tmppath                 /tmp/nagiosgrapher/
+ 
+-        fontfile				/usr/local/rrdtool/share/rrdtool/fonts/DejaVuSansMono-Roman.ttf
++        fontfile		/usr/share/rrdtool/fonts/DejaVuSansMono-Roman.ttf
+ 
+         serviceext_type         @NG_SRVEXT@
+         serviceextinfo          @NG_SRVEXT_FILE@
