@@ -3,7 +3,7 @@
 # - bconds for network/pipe
 # - service nagios-grapher does not support chkconfig
 # - logrotate config
-# - !! patch for collect2.pl - user,group,permision for files/dirs 
+# - !! patch for collect2.pl - user,group,permision for files/dirs
 #	defined in ngraph.ncfg (look %files section)
 # - !!	patch for lib/NagiosGrapher/Hooks/SrvExtWriteHostextInfo.pm line 94
 
@@ -27,10 +27,11 @@ Patch6:		%{name}-rrdfont_path.patch
 URL:		http://tinyurl.com/ad67c
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.228
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	ImageMagick-perl
 Requires:	nagios-cgi
+Requires:	rc-scripts
 Requires:	rrdtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
