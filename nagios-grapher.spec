@@ -17,6 +17,7 @@ Patch2:		%{name}-init.patch
 Patch3:		%{name}-syntax_error.patch
 Patch4:		%{name}-extinfo_file.patch
 Patch5:		%{name}-perl_path.patch
+Patch6:         %{name}-rrdfont_path.patch
 URL:		http://tinyurl.com/ad67c
 BuildRequires:	rpmbuild(macros) >= 1.228
 Requires(post,preun):	/sbin/chkconfig
@@ -66,6 +67,7 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %{__autoconf}
