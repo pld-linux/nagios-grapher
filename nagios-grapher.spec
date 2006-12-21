@@ -7,23 +7,23 @@
 #	defined in ngraph.ncfg (look %files section)
 # - !!	patch for lib/NagiosGrapher/Hooks/SrvExtWriteHostextInfo.pm line 94
 
+%define		_rc	rc2
+%define		_rel	0.1
 %include	/usr/lib/rpm/macros.perl
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
 Name:		nagios-grapher
 Version:	1.6.1
-Release:	0.3
+Release:	0.%{_rc}.%{_rel}
 License:	GPL
 Group:		Applications/System
-Source0:	NagiosGrapher-%{version}-rc1.tar.bz2
-# Source0-md5:	3bb2029ee72341fe4529d540d8b7bf9f
+Source0:	NagiosGrapher-%{version}-%{_rc}.tar.bz2
+# Source0-md5:	d0a5257203851c168e776f597bfbd56b
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-install_init.patch
 Patch2:		%{name}-init.patch
-Patch3:		%{name}-syntax_error.patch
-Patch4:		%{name}-extinfo_file.patch
-Patch5:		%{name}-perl_path.patch
-Patch6:		%{name}-rrdfont_path.patch
+Patch3:		%{name}-perl_path.patch
+Patch4:		%{name}-rrdfont_path.patch
 URL:		http://tinyurl.com/ad67c
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
@@ -61,14 +61,12 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 - ³atwy w instalacji
 
 %prep
-%setup -q -c -a 0
+%setup -q -n NagiosGrapher-%{version}-%{_rc}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 %build
 %{__autoconf}
@@ -87,8 +85,8 @@ NagiosGrapher gromadzi wyj¶cie z wtyczek Nagiosa i generuje wykresy.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/nagios/{serviceext,hostext}
-install -d $RPM_BUILD_ROOT%{_var}/log/nagios
-install -d $RPM_BUILD_ROOT%{_var}/lib/nagios/nagios_grapher
+install -d $RPM_BUILD_ROOT/var/log/nagios
+install -d $RPM_BUILD_ROOT/var/lib/nagios/nagios_grapher
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -106,6 +104,13 @@ cp contrib/rrd_commix/README contrib/rrd_commix/README-rrd_commix
 rm -rf $RPM_BUILD_ROOT
 
 %post
+if [ "$1" = 1 ]; then
+	if [ ! -f /var/log/nagios/ngraph.log ]; then
+		touch /var/log/nagios/ngraph.log
+		chown nagios:nagios-data /var/log/nagios/ngraph.log
+		chmod 660 /var/log/nagios/ngraph.log
+	fi
+fi
 #/sbin/chkconfig --add %{name}
 %service %{name} restart
 
@@ -130,5 +135,5 @@ fi
 %attr(755,root,root) %{_libdir}/nagios/cgi/*
 %attr(755,root,root) %{perl_vendorlib}/*
 %{_datadir}/nagios/images/*
-%dir %attr(755,nagios,nagios-data) %{_var}/lib/nagios/nagios_grapher
-%config(noreplace) %verify(not md5 mtime size) %attr(660,nagios,nagios-data) %{_var}/log/nagios/ngraph.log
+%dir %attr(755,nagios,nagios-data) /var/lib/nagios/nagios_grapher
+%ghost /var/log/nagios/ngraph.log
