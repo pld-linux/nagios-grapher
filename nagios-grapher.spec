@@ -11,7 +11,7 @@
 %define		_rel	0.1
 %include	/usr/lib/rpm/macros.perl
 Summary:	Plugins for Nagios to integration with RRDTool
-Summary(pl):	Wtyczka dla Nagiosa integruj±ca z RRDTool
+Summary(pl.UTF-8):   Wtyczka dla Nagiosa integrujƒÖca z RRDTool
 Name:		nagios-grapher
 Version:	1.6.1
 Release:	0.%{_rc}.%{_rel}
@@ -49,16 +49,16 @@ graphs.
 - very slim backend - no need of a database systems rrdtool
 - easy to install
 
-%description -l pl
-NagiosGrapher gromadzi wyj∂cie z wtyczek Nagiosa i generuje wykresy.
+%description -l pl.UTF-8
+NagiosGrapher gromadzi wyj≈õcie z wtyczek Nagiosa i generuje wykresy.
 
-- pobieranie warto∂ci z Nagiosa bez ≥atania (np. poprzez
+- pobieranie warto≈õci z Nagiosa bez ≈Çatania (np. poprzez
   "process-service-perfdata")
-- wykresy w czasie rzeczywistym (maksymalne opÛºnienie 5 minut)
-- rozpoznawanie nowych hostÛw/us≥ug i automatyczne rysowanie ich
-- automatyczne czyszczenie i wyci±ganie zapisanych warto∂ci
-- bardzo lekki backend - nie wymagaj±cy systemÛw baz danych - rrdtool
-- ≥atwy w instalacji
+- wykresy w czasie rzeczywistym (maksymalne op√≥≈∫nienie 5 minut)
+- rozpoznawanie nowych host√≥w/us≈Çug i automatyczne rysowanie ich
+- automatyczne czyszczenie i wyciƒÖganie zapisanych warto≈õci
+- bardzo lekki backend - nie wymagajƒÖcy system√≥w baz danych - rrdtool
+- ≈Çatwy w instalacji
 
 %prep
 %setup -q -n NagiosGrapher-%{version}-%{_rc}
