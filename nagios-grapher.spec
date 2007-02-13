@@ -11,7 +11,7 @@
 %define		_rel	0.1
 %include	/usr/lib/rpm/macros.perl
 Summary:	Plugins for Nagios to integration with RRDTool
-Summary(pl.UTF-8):   Wtyczka dla Nagiosa integrująca z RRDTool
+Summary(pl.UTF-8):	Wtyczka dla Nagiosa integrująca z RRDTool
 Name:		nagios-grapher
 Version:	1.6.1
 Release:	0.%{_rc}.%{_rel}
