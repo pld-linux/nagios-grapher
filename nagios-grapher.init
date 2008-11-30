@@ -1,0 +1,95 @@
+#!/bin/sh
+#
+# nagios-grapher	Nagios network monitor
+#
+# chkconfig:	345 99 01
+#
+# description:	Nagios network monitor
+#
+# processname:	nagios-grapher
+# config:
+# pidfile:
+#
+# $Id$
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Get service config - may override defaults
+[ -f /etc/sysconfig/nagios-grapher ] && . /etc/sysconfig/nagios-grapher
+
+# Check that networking is up.
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network -a "$1" != stop -a "$1" != status ]; then
+		msg_network_down "Nagios Grapher collector"
+		exit 1
+	fi
+else
+	exit 0
+fi
+
+start() {
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/nagios-grapher ]; then
+		msg_starting "Nagios Grapher collector"
+		daemon --user=nagios /usr/lib/nagios/grapher/collect2.pl
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/nagios-grapher
+	else
+		msg_already_running "Nagios Grapher collector"
+	fi
+}
+
+stop() {
+	if [ -f /var/lock/subsys/nagios-grapher ]; then
+		# Stop daemons.
+		msg_stopping "Nagios Grapher collector"
+		killproc nagios-grapher
+		rm -f /var/lock/subsys/nagios-grapher
+	else
+		msg_not_running "Nagios Grapher collector"
+	fi
+}
+
+condrestart() {
+	if [ -f /var/lock/subsys/nagios-grapher ]; then
+		stop
+		start
+	else
+		msg_not_running "Nagios Grapher collector"
+		RETVAL=$1
+	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart)
+	stop
+	start
+	;;
+  try-restart)
+	condrestart 0
+	;;
+  force-reload)
+	condrestart 7
+	;;
+  status)
+	status nagios-grapher
+	RETVAL=$?
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|try-restart|reload|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
