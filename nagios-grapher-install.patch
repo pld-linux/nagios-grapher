@@ -1,69 +1,43 @@
-diff -uNr nagios-grapher-1.6.1.orig/Makefile.in nagios-grapher-1.6.1/Makefile.in
---- nagios-grapher-1.6.1.orig/Makefile.in	2006-09-25 15:28:04.000000000 +0000
-+++ nagios-grapher-1.6.1/Makefile.in	2006-10-24 21:32:09.000000000 +0000
-@@ -135,9 +135,7 @@
+--- NagiosGrapher-1.6.1-rc5-0.5/Makefile.in	2008-11-30 16:15:10.740089873 +0200
++++ NagiosGrapher-1.6.1-rc5-0.5/Makefile.in	2008-11-30 16:19:01.309650319 +0200
+@@ -1,5 +1,8 @@
+ PERL				= @PERL@
  
- dirs:
- 	mkdir -p $(DESTDIR)/$(NG_SRVEXT_DIR)
--	chown -R $(NAGIOS_PROC_USER) $(DESTDIR)/$(NG_SRVEXT_DIR)
- 	mkdir -p $(DESTDIR)/$(NG_RRD)
--	chown -R $(NAGIOS_PROC_USER) $(DESTDIR)/$(NG_RRD)
- 	mkdir -p $(DESTDIR)/etc/init.d
- 	mkdir -p `dirname $(DESTDIR)/$(NG_LOGFILE)` 
- 	mkdir -p $(DESTDIR)/$(NG_DAEMON)
-@@ -145,8 +143,7 @@
- 
- logfile:
- 	touch $(DESTDIR)/$(NG_LOGFILE)
--	chown $(NAGIOS_PROC_USER) $(DESTDIR)/$(NG_LOGFILE)
--
-+	
- config-install:
- 	mkdir -p $(DESTDIR)/$(NG_CONFIG)
- 	mkdir -p $(DESTDIR)/$(NG_CONFIG_SUB)
-@@ -156,16 +153,9 @@
- 	cp -r cfg/templates/extra $(DESTDIR)/$(NG_CONFIG_SUB)
- 	cp -r cfg/templates/standard $(DESTDIR)/$(NG_CONFIG_SUB)
- 
--	chown -R $(NAGIOS_PROC_USER) $(DESTDIR)/$(NG_CONFIG)/*.ncfg
--	chgrp -R $(NAGIOS_PROC_GROUP) $(DESTDIR)/$(NG_CONFIG)/*.ncfg
--
--
- cgi-install:
- 	mkdir -p $(DESTDIR)/$(NAGIOS_FOLDER_CGI)
- 	cp sbin/*.cgi $(DESTDIR)/$(NAGIOS_FOLDER_CGI)
--	chown -R $(NAGIOS_PROC_USER) $(DESTDIR)/$(NAGIOS_FOLDER_CGI)
--	chgrp -R $(APACHE_GROUP) $(DESTDIR)/$(NAGIOS_FOLDER_CGI)
--	chmod -R 0755 $(DESTDIR)/$(NAGIOS_FOLDER_CGI)
++CC				= gcc
++CFLAGS			= -O2 -Wall
++
+ # NAGIOS_VERSION		= @NAGIOS_VERSION@
+ NAGIOS_CONFIG			= @NAGIOS_CONFIG@
+ NAGIOS_CONFIG_CGI		= @NAGIOS_CONFIG_CGI@
+@@ -196,7 +199,7 @@
+ 	chmod -R 0755 $(DESTDIR)/$(NAGIOS_FOLDER_CGI)
  
  bin-install:
- 	mkdir -p $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
-@@ -175,10 +165,6 @@
- 		contrib/udpecho/udpecho.c \
- 		$(DESTDIR)/$(NAGIOS_CONTRIBUTION)
+-	mkdir -p $(NAGIOS_CONTRIBUTION)
++	mkdir -p $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
+ 	cp bin/collect2.pl \
+ 		bin/fifo_write.pl \
+  		contrib/fifo_write/C/fifo_write \
+@@ -208,17 +211,19 @@
+ 	chmod -R 0755 $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
  
--	chown -R $(NAGIOS_PROC_USER) $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
--	chgrp -R $(NAGIOS_PROC_GROUP) $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
--	chmod -R 0755 $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
--
  bin-compile:
- 	gcc $(DESTDIR)/$(NAGIOS_CONTRIBUTION)/fifo_write.c -o \
- 		$(DESTDIR)/$(NAGIOS_CONTRIBUTION)/fifo_write
-@@ -186,9 +172,6 @@
- 	gcc $(DESTDIR)/$(NAGIOS_CONTRIBUTION)/udpecho.c -o \
- 		$(DESTDIR)/$(NAGIOS_CONTRIBUTION)/udpecho
+-	gcc contrib/fifo_write/C/fifo_write.c -o \
++	mkdir -p $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
++	$(CC) $(CFLAGS) contrib/fifo_write/C/fifo_write.c -o \
+ 		contrib/fifo_write/C/fifo_write
  
--	chown -R $(NAGIOS_PROC_USER) $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
--	chgrp -R $(NAGIOS_PROC_GROUP) $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
--
+-	gcc contrib/udpecho/udpecho.c -o \
++	$(CC) $(CFLAGS) contrib/udpecho/udpecho.c -o \
+ 		contrib/udpecho/udpecho
+ 
+ 	chown -R $(NAGIOS_PROC_USER) $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
+ 	chgrp -R $(NAGIOS_PROC_GROUP) $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
++	chmod -R 0755 $(DESTDIR)/$(NAGIOS_CONTRIBUTION)
+ 
  perl-install:
- 	mkdir -p $(DESTDIR)/$(PERL_INC)
+-	mkdir -p $(PERL_INC)/NagiosGrapher/Hooks
++	mkdir -p $(DESTDIR)/$(PERL_INC)/NagiosGrapher/Hooks
+ 
  	cp lib/NagiosGrapher.pm $(DESTDIR)/$(PERL_INC)
-@@ -196,7 +179,6 @@
- 
- init-script:
- 	cp nagios_grapher $(DESTDIR)/etc/init.d
--	chmod 0755 $(DESTDIR)/etc/init.d/nagios_grapher
- 
- image-install:
- 	mkdir -p $(DESTDIR)/$(NAGIOS_IMAGES)
+ 	cp lib/NagiosGrapher/*.pm $(DESTDIR)/$(PERL_INC)/NagiosGrapher

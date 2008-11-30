@@ -1,0 +1,17 @@
+--- NagiosGrapher-1.6.1-rc5-0.5/config.layout	2008-11-30 16:24:48.476405031 +0200
++++ NagiosGrapher-1.6.1-rc5-0.5/config.layout	2008-11-30 17:15:20.052656483 +0200
+@@ -135,12 +135,10 @@
+ 	ng_interface_pipe:		/var/lib/nagios/rw/ngraph.pipe
+ 	ng_logfile:			/var/log/nagios/ngraph.log
+ 	ng_rrd:				/var/lib/nagios/rrd
+-	ng_rrd_font:			/usr/local/rrdtool/share/rrdtool/fonts/DejaVuSansMono-Roman.ttf
+-	# and to add for fontfile in ngraph.ncfg:
+-	# ng_rrd_font:			${datadir}/rrdtool/fonts/DejaVuSansMono-Roman.ttf
++	ng_rrd_font:			/usr/share/rrdtool/fonts/DejaVuSansMono-Roman.ttf
+ 	ng_cgi:				/nagios/cgi-bin
+ 	ng_logos:			/nagios/images/logos
+-	init_script_dir:		/etc/init.d
++	init_script_dir:		/etc/rc.d/init.d
+ </Layout>
+ 
+ <Layout OpenBSD>

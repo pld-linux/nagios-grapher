@@ -1,6 +1,5 @@
-diff -uNr NagiosGrapher-1.6-rc1.orig/contrib/nagios_grapher.redhat NagiosGrapher-1.6-rc1/contrib/nagios_grapher.redhat
---- NagiosGrapher-1.6-rc1.orig/contrib/nagios_grapher.redhat	2006-04-28 10:56:06.000000000 +0200
-+++ NagiosGrapher-1.6-rc1/contrib/nagios_grapher.redhat	2006-06-21 16:37:05.000000000 +0200
+--- NagiosGrapher-1.6-rc1.orig/init_scripts/nagios_grapher.redhat	2006-04-28 10:56:06.000000000 +0200
++++ NagiosGrapher-1.6-rc1/init_scripts/nagios_grapher.redhat	2006-06-21 16:37:05.000000000 +0200
 @@ -8,7 +8,7 @@
  
  NAME=collect2.pl

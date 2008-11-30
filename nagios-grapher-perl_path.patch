@@ -1,7 +1,6 @@
-diff -uNr nagios-grapher-1.6.1.orig/sbin/graphs.cgi nagios-grapher-1.6.1/sbin/graphs.cgi
---- nagios-grapher-1.6.1.orig/sbin/graphs.cgi	2006-08-01 10:10:41.000000000 +0000
-+++ nagios-grapher-1.6.1/sbin/graphs.cgi	2006-10-28 22:40:43.000000000 +0000
-@@ -350,7 +350,7 @@
+--- NagiosGrapher-1.6.1-rc5-0.5/sbin/graphs.cgi.in~	2007-08-15 13:23:16.000000000 +0300
++++ NagiosGrapher-1.6.1-rc5-0.5/sbin/graphs.cgi.in	2008-11-30 16:02:07.189748976 +0200
+@@ -352,7 +352,7 @@
  }
  
  sub action_showcalendar {
