@@ -35,7 +35,7 @@ start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/nagios-grapher ]; then
 		msg_starting "Nagios Grapher collector"
-		daemon --user=nagios /usr/lib/nagios/grapher/collect2.pl
+		daemon --user nagios /usr/lib/nagios/grapher/collect2.pl
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/nagios-grapher
 	else
