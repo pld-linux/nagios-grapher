@@ -5,7 +5,7 @@
  	@echo "-----------------------"
  	@echo "The icon_image_tag changed from version! Please change it to:"
 -	@echo "   icon_image_tag  ' dot.png' border=\"0\"></a><A TARGET=\"_blank\" HREF=\"graphs.cgi?###URL###\"><img src='###IMAGESRC###' '"
-+	@echo "   icon_image_tag  ' dot.png' border=\"0\"></a><A TARGET=\"_blank\" HREF=\"graphs.cgi?%URL%\"><img src='%IMAGESRC%'"
++	@echo "   icon_image_tag  ' dot.png' border=\"0\"></a><A TARGET=\"_blank\" HREF=\"graphs.cgi?___URL___\"><img src='___IMAGESRC___'"
  	@echo
  
  fixdeps-messages:
@@ -18,21 +18,21 @@
 -	                $new_image_tag =~ s/###HOST###/$host/gi;
 -	                $new_image_tag =~ s/###SERVICE###/$service/gi;
 -	                $new_image_tag =~ s/###URL###/$graph_url/gi;
-+	                $new_image_tag =~ s/%HOST%/$host/gi;
-+	                $new_image_tag =~ s/%SERVICE%/$service/gi;
-+	                $new_image_tag =~ s/%URL%/$graph_url/gi;
++	                $new_image_tag =~ s/___HOST___/$host/gi;
++	                $new_image_tag =~ s/___SERVICE___/$service/gi;
++	                $new_image_tag =~ s/___URL___/$graph_url/gi;
  
  					# Replace wrappers, src specific
  					if ($image_static) {
 -						$new_image_tag =~ s/###IMAGESRC###/$image_src/gi;
-+						$new_image_tag =~ s/%IMAGESRC%/$image_src/gi;
++						$new_image_tag =~ s/___IMAGESRC___/$image_src/gi;
  		            }
  		            elsif (!$image_static && $image_script) {
  		            	$new_image_script = $image_script;
 -		            	$new_image_script =~ s/###URL###/$graph_url/gi;
 -		            	$new_image_tag =~ s/###IMAGESRC###/$new_image_script/gi;
-+		            	$new_image_script =~ s/%URL%/$graph_url/gi;
-+		            	$new_image_tag =~ s/%IMAGESRC%/$new_image_script/gi;
++		            	$new_image_script =~ s/___URL___/$graph_url/gi;
++		            	$new_image_tag =~ s/___IMAGESRC___/$new_image_script/gi;
  		            }
  
  					my %args = (
@@ -43,10 +43,10 @@
      cgi_config              @NAGIOS_CONFIG_CGI@
  
 -    icon_image_tag          ' dot.png' border="0"></a><A TARGET="_blank" HREF="graphs.cgi?###URL###"><img src='###IMAGESRC###' '
-+    icon_image_tag          ' dot.png' border="0"></a><A TARGET="_blank" HREF="graphs.cgi?%URL%"><img src='%IMAGESRC%' '
++    icon_image_tag          ' dot.png' border="0"></a><A TARGET="_blank" HREF="graphs.cgi?___URL___"><img src='___IMAGESRC___' '
      icon_image_src          @NG_LOGOS@/graph.png
 -    icon_image_script       @NG_CGI@/rrd2-system.cgi?###URL###&start=-5400&title=Actual&width=20&height=20&type=AVERAGE&only-graph=true
-+    icon_image_script       @NG_CGI@/rrd2-system.cgi?%URL%&start=-5400&title=Actual&width=20&height=20&type=AVERAGE&only-graph=true
++    icon_image_script       @NG_CGI@/rrd2-system.cgi?___URL___&start=-5400&title=Actual&width=20&height=20&type=AVERAGE&only-graph=true
      icon_image_static       true
  
      log_file                @NG_LOGFILE@
@@ -57,7 +57,7 @@
          
          # the syntax for the serviceext entries
 -        icon_image_tag          dot.gif' border="0"></a><A TARGET="_blank" HREF="graphs.cgi?###URL###" BORDER="0"><img src="/nagios/images/logos/graph.png" border="0"logos/dot.gif
-+        icon_image_tag          dot.gif' border="0"></a><A TARGET="_blank" HREF="graphs.cgi?%URL%" BORDER="0"><img src="/nagios/images/logos/graph.png" border="0"logos/dot.gif
++        icon_image_tag          dot.gif' border="0"></a><A TARGET="_blank" HREF="graphs.cgi?___URL___" BORDER="0"><img src="/nagios/images/logos/graph.png" border="0"logos/dot.gif
          
          # logfile and loglevel
          log_file                /var/log/nagios/ngraph.log
