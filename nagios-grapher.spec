@@ -6,7 +6,7 @@
 
 %define		subver	rc5
 %define		subver2	0.5
-%define		rel		0.8
+%define		rel		0.17
 %include	/usr/lib/rpm/macros.perl
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl.UTF-8):	Wtyczka dla Nagiosa integrująca z RRDTool
@@ -17,16 +17,18 @@ License:	GPL
 Group:		Applications/System
 Source0:	https://www.nagiosforge.org/gf/download/frsrelease/101/44/NagiosGrapher-%{version}-%{subver}-%{subver2}.tar.gz
 # Source0-md5:	4c7ce3a350a5be900bb75c2c5f4ae170
-Source1:	nagios-grapher.init
+Source1:	%{name}.init
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-layout.patch
 Patch2:		%{name}-init.patch
 Patch3:		%{name}-perl_path.patch
+Patch4:		%{name}-hashes.patch
 URL:		http://www.netways.de/de/produkte/nagios_addons/nagiosgrapher/
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
+Requires:	ImageMagick-coder-png
 Requires:	ImageMagick-perl
 Requires:	nagios-cgi
 Requires:	rc-scripts
@@ -64,9 +66,28 @@ NagiosGrapher gromadzi wyjście z wtyczek Nagiosa i generuje wykresy.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # pointless to include in %doc
 rm -f doc/gpl.txt
+
+cat <<'EOF' > plugin.cfg
+# Enable in nagios.cfg one based on the interface you are using,
+# updecho for network, fifo_write for pipe:
+#   service_perfdata_command=process-service-perfdata-ngraph-udpecho
+#   service_perfdata_command=process-service-perfdata-ngraph-fifo_write
+
+define command {
+	command_name process-service-perfdata-ngraph-udpecho
+	command_line %{_plugindir}/udpecho
+}
+
+define command {
+	command_name process-service-perfdata-ngraph-fifo_write
+# NOTE: tabs are important here!
+	command_line %{_plugindir}/fifo_write /var/lib/nagios/rw/ngraph.pipe '$HOSTNAME$	$SERVICEDESC$	$SERVICEOUTPUT$	$SERVICEPERFDATA$' 3
+}
+EOF
 
 %build
 %{__autoconf}
@@ -88,6 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/nagios/{serviceext,hostext}
 install -d $RPM_BUILD_ROOT/var/log/nagios
 install -d $RPM_BUILD_ROOT/var/lib/nagios/nagios_grapher
+install -d $RPM_BUILD_ROOT/var/lib/nagios/rrd
 
 %{__make} install -j1 \
 	CC="%{__cc}" \
@@ -104,6 +126,8 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
 install contrib/fifo_write/tcp/fifo_write_from_tcp.pl $RPM_BUILD_ROOT%{_plugindir}
 install contrib/fifo_write/udpsend.pl $RPM_BUILD_ROOT%{_plugindir}
 install contrib/rrd_commix/*[yl] $RPM_BUILD_ROOT%{_plugindir}
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/nagios/plugins
+cp -a plugin.cfg $RPM_BUILD_ROOT%{_sysconfdir}/nagios/plugins/ngraph.cfg
 cp contrib/rrd_commix/README contrib/rrd_commix/README-rrd_commix
 
 # copies in %doc
@@ -137,12 +161,14 @@ fi
 %dir %{_sysconfdir}/nagios/ngraph.d/templates/extra
 %dir %{_sysconfdir}/nagios/ngraph.d/templates/standard
 
-%config(noreplace) %verify(not md5 mtime size) %attr(640,nagios,nagios-data) %{_sysconfdir}/nagios/ngraph.d/nmgraph.ncfg
-%config(noreplace) %verify(not md5 mtime size) %attr(640,nagios,nagios-data) %{_sysconfdir}/nagios/ngraph.ncfg
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/ngraph.d/nmgraph.ncfg
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/ngraph.ncfg
+%config(noreplace) %verify(not md5 mtime size) %attr(640,root,nagios) %{_sysconfdir}/nagios/plugins/ngraph.cfg
 %dir %{_plugindir}
 %attr(755,root,root) %{_plugindir}/*
 %attr(755,root,root) %{_libdir}/nagios/cgi/*
 %{_datadir}/nagios/images/*
 
-%dir %attr(755,nagios,nagios-data) /var/lib/nagios/nagios_grapher
+%dir %attr(775,root,nagios) /var/lib/nagios/nagios_grapher
+%dir %attr(775,root,nagios) /var/lib/nagios/rrd
 %ghost /var/log/nagios/ngraph.log
