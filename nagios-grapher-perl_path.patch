@@ -9,3 +9,14 @@
  
    my @today = localtime( time() );
  
+--- NagiosGrapher-1.6.1-rc5-0.5/sbin/rrd2-system.cgi.in~	2008-12-01 14:55:05.000000000 +0200
++++ NagiosGrapher-1.6.1-rc5-0.5/sbin/rrd2-system.cgi.in	2008-12-01 14:56:27.971503013 +0200
+@@ -82,7 +82,7 @@
+ my @caller = ($graph_script, join(';', @param_arr));
+ 
+ # get the image
+-my $perl = `which perl`;
++my $perl = '/usr/bin/perl';
+ chomp($perl);
+ my $image_bin;
+ open (IMG, "-|") || exec $perl,@caller;
