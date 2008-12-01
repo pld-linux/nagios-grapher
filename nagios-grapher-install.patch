@@ -1,5 +1,5 @@
---- NagiosGrapher-1.6.1-rc5-0.5/Makefile.in	2008-11-30 16:15:10.740089873 +0200
-+++ NagiosGrapher-1.6.1-rc5-0.5/Makefile.in	2008-11-30 16:19:01.309650319 +0200
+--- NagiosGrapher-1.6.1-rc5-0.5/Makefile.in	2008-11-30 16:19:01.309650319 +0200
++++ NagiosGrapher-1.6.1-rc5-0.5/Makefile.in	2008-12-01 18:53:13.223413730 +0200
 @@ -1,5 +1,8 @@
  PERL				= @PERL@
  
@@ -9,6 +9,17 @@
  # NAGIOS_VERSION		= @NAGIOS_VERSION@
  NAGIOS_CONFIG			= @NAGIOS_CONFIG@
  NAGIOS_CONFIG_CGI		= @NAGIOS_CONFIG_CGI@
+@@ -181,8 +184,8 @@
+ 
+ 	cp -r cfg/ng*.ncfg $(DESTDIR)/$(NG_CONFIG)
+ 	cp -r cfg/nmg*.ncfg $(DESTDIR)/$(NG_CONFIG_SUB)
+-	cp -r cfg/templates/extra/*.ncfg_disabled $(DESTDIR)/$(NG_CONFIG_SUB)/templates/extra
+-	cp -r cfg/templates/standard/*.ncfg_disabled $(DESTDIR)/$(NG_CONFIG_SUB)/templates/standard
++	cp -r cfg/templates/extra/*.ncfg* $(DESTDIR)/$(NG_CONFIG_SUB)/templates/extra
++	cp -r cfg/templates/standard/*.ncfg* $(DESTDIR)/$(NG_CONFIG_SUB)/templates/standard
+ 
+ 	chown -R $(NAGIOS_PROC_USER) $(DESTDIR)/$(NG_CONFIG)/*.ncfg*
+ 	chgrp -R $(NAGIOS_PROC_GROUP) $(DESTDIR)/$(NG_CONFIG)/*.ncfg*
 @@ -196,7 +199,7 @@
  	chmod -R 0755 $(DESTDIR)/$(NAGIOS_FOLDER_CGI)
  
