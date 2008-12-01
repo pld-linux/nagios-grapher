@@ -6,7 +6,7 @@
 
 %define		subver	rc5
 %define		subver2	0.5
-%define		rel		0.17
+%define		rel		0.18
 %include	/usr/lib/rpm/macros.perl
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl.UTF-8):	Wtyczka dla Nagiosa integrująca z RRDTool
@@ -71,6 +71,10 @@ NagiosGrapher gromadzi wyjście z wtyczek Nagiosa i generuje wykresy.
 # pointless to include in %doc
 rm -f doc/gpl.txt
 
+for a in cfg/templates/*/*_disabled; do
+	mv $a ${a%_disabled}
+done
+
 cat <<'EOF' > plugin.cfg
 # Enable in nagios.cfg one based on the interface you are using,
 # updecho for network, fifo_write for pipe:
@@ -131,8 +135,7 @@ cp -a plugin.cfg $RPM_BUILD_ROOT%{_sysconfdir}/nagios/plugins/ngraph.cfg
 cp contrib/rrd_commix/README contrib/rrd_commix/README-rrd_commix
 
 # copies in %doc
-rm -f $RPM_BUILD_ROOT%{_sysconfdir}/nagios/ngraph.d/templates/standard/*_disabled
-rm -f $RPM_BUILD_ROOT%{_sysconfdir}/nagios/ngraph.d/templates/extra/*_disabled
+rm -f $RPM_BUILD_ROOT%{_sysconfdir}/nagios/ngraph.d/templates/{standard,extra}/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
