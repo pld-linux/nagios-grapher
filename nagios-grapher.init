@@ -7,8 +7,6 @@
 # description:	Nagios network monitor
 #
 # processname:	nagios-grapher
-# config:
-# pidfile:
 #
 # $Id$
 
