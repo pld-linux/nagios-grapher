@@ -7,7 +7,6 @@
 %define		subver	rc5
 %define		subver2	0.5
 %define		rel		0.18
-%include	/usr/lib/rpm/macros.perl
 Summary:	Plugins for Nagios to integration with RRDTool
 Summary(pl.UTF-8):	Wtyczka dla Nagiosa integrująca z RRDTool
 Name:		nagios-grapher
